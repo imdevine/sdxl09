@@ -386,6 +386,8 @@ with block:
         #    gr.Markdown("Advanced settings are temporarily unavailable")
             samples = gr.Slider(label="Images", minimum=1, maximum=8, value=1, step=1)
             steps = gr.Slider(label="Steps", minimum=1, maximum=1000, value=75, step=1)
+	    width = gr.Slider(label="Width", minimum=512, maximum=1344, value=1024, step=64)
+	    height = gr.Slider(label="Height", minimum=512, maximum=1344, value=1024, step=64)
             if enable_refiner:
                 refiner_strength = gr.Slider(label="Refiner Strength", minimum=0, maximum=1.0, value=0.3, step=0.1)
             else:
@@ -401,11 +403,11 @@ with block:
                 randomize=False,
             )
 
-        ex = gr.Examples(examples=examples, fn=infer, inputs=[text, negative, guidance_scale], outputs=[gallery, community_icon, loading_icon, share_button], cache_examples=False)
+        ex = gr.Examples(examples=examples, fn=infer, inputs=[text, negative, guidance_scale, width, height], outputs=[gallery, community_icon, loading_icon, share_button], cache_examples=False)
         ex.dataset.headers = [""]
-        negative.submit(infer, inputs=[text, negative, guidance_scale, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
-        text.submit(infer, inputs=[text, negative, guidance_scale, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
-        btn.click(infer, inputs=[text, negative, guidance_scale, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)		
+        negative.submit(infer, inputs=[text, negative, guidance_scale, width, height, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
+        text.submit(infer, inputs=[text, negative, guidance_scale, width, height, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
+        btn.click(infer, inputs=[text, negative, guidance_scale, width, height, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)		
         
         #advanced_button.click(
         #    None,
