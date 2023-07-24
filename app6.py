@@ -62,12 +62,12 @@ if enable_refiner:
 
 is_gpu_busy = False
 
-def infer(prompt, negative, scale, samples=4, steps=50, refiner_strength=0.3, num_images=1):
+def infer(prompt, negative, scale, w, h, samples=4, steps=50, refiner_strength=0.3, num_images=1):
     prompt, negative = [prompt] * samples, [negative] * samples
     images_b64_list = []
 
     for i in range(0, num_images):
-        images = pipe(prompt=prompt, negative_prompt=negative, guidance_scale=scale, num_inference_steps=steps).images
+        images = pipe(prompt=prompt, negative_prompt=negative, guidance_scale=scale, width=w, height=h, num_inference_steps=steps).images
         os.makedirs(r"stable-diffusion-xl-demo/outputs", exist_ok=True)
         gc.collect()
         torch.cuda.empty_cache()
@@ -402,11 +402,11 @@ with block:
                 randomize=False,
             )
 
-        ex = gr.Examples(examples=examples, fn=infer, inputs=[text, negative, guidance_scale, width, height], outputs=[gallery, community_icon, loading_icon, share_button], cache_examples=False)
+        ex = gr.Examples(examples=examples, fn=infer, inputs=[text, negative, guidance_scale, w, h], outputs=[gallery, community_icon, loading_icon, share_button], cache_examples=False)
         ex.dataset.headers = [""]
-        negative.submit(infer, inputs=[text, negative, guidance_scale, width, height, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
-        text.submit(infer, inputs=[text, negative, guidance_scale, width, height, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
-        btn.click(infer, inputs=[text, negative, guidance_scale, width, height, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)		
+        negative.submit(infer, inputs=[text, negative, guidance_scale, w, h, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
+        text.submit(infer, inputs=[text, negative, guidance_scale, w, h, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)
+        btn.click(infer, inputs=[text, negative, guidance_scale, w, h, samples, steps, refiner_strength, num_images], outputs=[gallery], postprocess=False)		
         
         #advanced_button.click(
         #    None,
