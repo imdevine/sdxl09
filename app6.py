@@ -365,7 +365,7 @@ with block:
                 num_images = gr.Slider(
                     label="Number of Images",
                     minimum=1,
-                    maximum=1000,
+                    maximum=100,
                     value=1,
                     step=1,
 					enabled=True
@@ -385,7 +385,7 @@ with block:
         with gr.Accordion("Advanced settings", open=False):
         #    gr.Markdown("Advanced settings are temporarily unavailable")
             samples = gr.Slider(label="Images", minimum=1, maximum=8, value=1, step=1)
-            steps = gr.Slider(label="Steps", minimum=1, maximum=250, value=50, step=1)
+            steps = gr.Slider(label="Steps", minimum=1, maximum=1000, value=75, step=1)
             if enable_refiner:
                 refiner_strength = gr.Slider(label="Refiner Strength", minimum=0, maximum=1.0, value=0.3, step=0.1)
             else:
@@ -393,13 +393,13 @@ with block:
             guidance_scale = gr.Slider(
                 label="Guidance Scale", minimum=0, maximum=50, value=9, step=0.1
             )
-        #    seed = gr.Slider(
-        #        label="Seed",
-        #        minimum=0,
-        #        maximum=2147483647,
-        #        step=1,
-        #        randomize=True,
-        #    )
+            seed = gr.Slider(
+                label="Seed",
+                minimum=0,
+                maximum=2147483647,
+                step=1,
+                randomize=False,
+            )
 
         ex = gr.Examples(examples=examples, fn=infer, inputs=[text, negative, guidance_scale], outputs=[gallery, community_icon, loading_icon, share_button], cache_examples=False)
         ex.dataset.headers = [""]
