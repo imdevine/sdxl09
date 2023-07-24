@@ -385,8 +385,8 @@ with block:
         with gr.Accordion("Advanced settings", open=False):
             samples = gr.Slider(label="Images", minimum=1, maximum=8, value=1, step=1)
             steps = gr.Slider(label="Steps", minimum=1, maximum=1000, value=75, step=1)
-            width = gr.Slider(label="Width", minimum=512, maximum=1344, value=1024, step=64)
-            height = gr.Slider(label="Height", minimum=512, maximum=1344, value=1024, step=64)
+            w = gr.Slider(label="Width", minimum=512, maximum=1344, value=1024, step=64)
+            h = gr.Slider(label="Height", minimum=512, maximum=1344, value=1024, step=64)
             if enable_refiner:
                 refiner_strength = gr.Slider(label="Refiner Strength", minimum=0, maximum=1.0, value=0.3, step=0.1)
             else:
